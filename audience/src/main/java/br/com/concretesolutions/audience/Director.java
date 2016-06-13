@@ -3,13 +3,21 @@ package br.com.concretesolutions.audience;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import br.com.concretesolutions.audience.actor.ApplicationActor;
 import br.com.concretesolutions.audience.system.ActivityChoreography;
 import br.com.concretesolutions.audience.system.ActorRef;
 import br.com.concretesolutions.audience.system.ActorSystem;
+import timber.log.Timber;
 
+/**
+ * <h1>The Director.</h1>
+ * <p>
+ * Controls the crew system. Through him you have a single point of coordination.
+ * </p>
+ */
 public final class Director {
 
     public static final String ROOT_NAMESPACE = "/app/";

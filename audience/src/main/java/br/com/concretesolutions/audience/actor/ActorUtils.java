@@ -1,13 +1,19 @@
 package br.com.concretesolutions.audience.actor;
 
+import android.app.Activity;
 import android.os.Looper;
 
+import br.com.concretesolutions.audience.Director;
 import br.com.concretesolutions.audience.system.ActorRef;
 import br.com.concretesolutions.audience.system.message.PoisonPill;
 
 public final class ActorUtils {
 
     private ActorUtils() {}
+
+    public static <T> void replyOnStage(Activity activity, T message) {
+        Director.callActor(activity).tellOnStage(message);
+    }
 
     public static void assertIsNotOnStage(ActorRef sender) {
 
@@ -21,7 +27,7 @@ public final class ActorUtils {
 
     public static void assertMessageIsOfType(Object message, Class<?> type, ActorRef sender) {
 
-        if (message.getClass() == type)
+        if (type.isAssignableFrom(message.getClass()))
             return;
 
         final IllegalArgumentException exception =

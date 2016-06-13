@@ -21,7 +21,7 @@ public final class StaffRegistry {
             fullPath += '/';
 
         for (Pattern pattern : registry.keySet()) {
-            if (pattern.matcher(fullPath).find())
+            if (pattern.matcher(fullPath).matches())
                 return registry.get(pattern);
         }
 

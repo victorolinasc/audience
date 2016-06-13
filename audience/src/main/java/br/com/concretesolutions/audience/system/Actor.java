@@ -13,7 +13,7 @@ public abstract class Actor {
     private final Map<Class<?>, Script<?>> scripts = new HashMap<>();
     private final Map<String, AssistantScript<?>> referenceScripts = new HashMap<>();
 
-    public abstract void onReceive(Object message, int discriminator, ActorRef sender);
+    public abstract <T> void onReceive(T message, int discriminator, ActorRef sender);
 
     <T> void registerScript(Class<T> clazz, Script<T> script) {
         scripts.put(clazz, script);

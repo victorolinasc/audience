@@ -15,6 +15,7 @@ import java.util.Set;
 import br.com.concretesolutions.audience.staff.Filter;
 import br.com.concretesolutions.audience.system.message.PoisonPill;
 import br.com.concretesolutions.audience.tragedy.TragedyException;
+import timber.log.Timber;
 
 public final class ActorSystem {
 
@@ -83,6 +84,7 @@ public final class ActorSystem {
 
         final Actor actor;
         final ActorRef result;
+
         if (pathToActorMap.containsKey(path)) {
             actor = pathToActorMap.get(path);
             result = new ActorRefImpl(this, actor, path);
@@ -197,12 +199,15 @@ public final class ActorSystem {
 
         final Actor actor;
 
+
         if (pathToActorMap.containsKey(target))
             actor = pathToActorMap.get(target);
 
         else {
-
             String newPath;
+
+            Timber.d("Rebound paths: %s", reboundPaths);
+
             if ((newPath = reboundPaths.get(target)) != null && pathToActorMap.containsKey(newPath))
                 actor = pathToActorMap.get(newPath);
 
@@ -233,6 +238,7 @@ public final class ActorSystem {
             stop(target);
             return true;
         }
+
         return false;
     }
 

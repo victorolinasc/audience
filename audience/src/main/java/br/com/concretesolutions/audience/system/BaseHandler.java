@@ -11,6 +11,7 @@ import br.com.concretesolutions.audience.script.api.Script;
 import br.com.concretesolutions.audience.script.api.Script1;
 import br.com.concretesolutions.audience.script.api.Script2;
 import br.com.concretesolutions.audience.script.api.Script3;
+import timber.log.Timber;
 
 abstract class BaseHandler extends Handler {
 
