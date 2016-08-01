@@ -6,7 +6,5 @@ import br.com.concretesolutions.audience.system.ActorRef;
 public class ApplicationActor extends Actor {
 
     @Override
-    public void onReceive(Object message, int discriminator, ActorRef sender) {
-
-    }
+    public void onReceive(Object message, int discriminator, ActorRef sender) {}
 }

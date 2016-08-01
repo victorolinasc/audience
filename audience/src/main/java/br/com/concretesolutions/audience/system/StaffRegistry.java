@@ -10,6 +10,7 @@ public final class StaffRegistry {
 
     private static final String ROOT_NS_MESSAGE = "All actors must have a known root namespace";
     private static final String[] ROOT_NAMESPACES = {"/app", "/activity", "/fragment", "/service", "/receiver"};
+
     private final Map<Pattern, Class<? extends Actor>> registry = new HashMap<>();
 
     public StaffRegistry() {

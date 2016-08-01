@@ -22,8 +22,8 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleTextAppearance="@style/Audience.Widget.TextAppearence.ExpandedToolbar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="Audience Android">
 
             <ImageView
@@ -53,6 +53,11 @@
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <Button
+            android:id="@+id/btn_call_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Call API" />
         <!-- container -->
 
     </android.support.v4.widget.NestedScrollView>

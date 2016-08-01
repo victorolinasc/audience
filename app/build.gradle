@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
@@ -18,19 +19,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 final supportVersion = '23.4.0'
-final okhttpVersion = '3.3.1'
-final retrofitVersion = '2.0.2'
+final okhttpVersion = '3.4.1'
+final retrofitVersion = '2.1.0'
 
 dependencies {
 
     compile project(':audience')
 
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
+
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
 
+    compile 'com.jakewharton.timber:timber:4.1.2'
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"

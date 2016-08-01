@@ -1,6 +1,5 @@
 package br.com.concretesolutions.audience.system;
 
-import android.content.res.Resources;
 import android.os.Message;
 import android.util.Log;
 
@@ -55,7 +54,7 @@ public final class ActorSystem {
 
     /**
      * Shuts down the actor system.
-     * <p>
+     * <p/>
      * Existing actors in the system will not be notified of this; they will just stop receiving
      * events.
      */
@@ -70,7 +69,8 @@ public final class ActorSystem {
     }
 
     /**
-     * Retrieves an actor. The path is treated as a relative path from root and is normalized before
+     * Retrieves an actor. The path is treated as a relative path from root and is normalized
+     * before
      * being set. If the actor corresponding to the given path doesn't exist, it will be created.
      *
      * @param path the location of the actor in the system
@@ -116,11 +116,10 @@ public final class ActorSystem {
     public ActorRef getOrCreateActor(String path) {
 
         final Class<? extends Actor> cls = registry.lookup(path);
-        // ActorRegistry.lookup(path);
 
         if (cls == null) {
             String msg = "No actor class was registered for the path " + path;
-            throw new Resources.NotFoundException(msg);
+            throw new TragedyException(msg);
         }
 
         return getOrCreateActor(path, cls);

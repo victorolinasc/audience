@@ -21,7 +21,7 @@ public final class ActorUtils {
 
     public static void assertMessageIsOfType(Object message, Class<?> type, ActorRef sender) {
 
-        if (message.getClass() == type)
+        if (type.isAssignableFrom(message.getClass()))
             return;
 
         final IllegalArgumentException exception =
