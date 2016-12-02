@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.function.Function;
+
 import br.com.concretesolutions.audience.Director;
 import br.com.concretesolutions.audience.actor.ConfigurableActor;
 import br.com.concretesolutions.audience.demo.R;
@@ -16,13 +18,6 @@ import br.com.concretesolutions.audience.demo.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.system.ActorRef;
 
 public final class RepositoriesActivity extends AppCompatActivity implements ConfigurableActor {
-
-    @Override
-    public void warmUp(ActorRef ref) {
-        ref.passScript(PageResultVO.class, this::updatePage)
-                .passAssistantScript("showLoading", sender -> showLoading())
-                .passAssistantScript("hideLoading", sender -> hideLoading());
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +39,13 @@ public final class RepositoriesActivity extends AppCompatActivity implements Con
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void warmUp(ActorRef ref) {
+        ref.passScript(PageResultVO.class, this::updatePage);
+//                .passAssistantScript("showLoading", sender -> showLoading())
+//                .passAssistantScript("hideLoading", sender -> hideLoading());
     }
 
     private void initToolbar() {

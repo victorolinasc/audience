@@ -1,7 +1,10 @@
 package br.com.concretesolutions.audience.demo.api;
 
+import android.content.Context;
+
 import java.io.IOException;
 
+import br.com.concretesolutions.audience.Director;
 import br.com.concretesolutions.audience.actor.ActorUtils;
 import br.com.concretesolutions.audience.system.Actor;
 import br.com.concretesolutions.audience.system.ActorRef;
@@ -21,7 +24,7 @@ public final class ApiClient extends Actor {
 
     private final Api api;
 
-    public ApiClient() {
+    public ApiClient(Context context) {
 
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor()

@@ -1,19 +1,21 @@
-package br.com.concretesolutions.audience.demo;
+package com.example;
 
 import android.app.Application;
 import android.content.res.Configuration;
 
-import br.com.concretesolutions.audience.Director;
-import br.com.concretesolutions.audience.demo.api.ApiClient;
+import br.com.concretesolutions.audience.core.Director;
 
-public class CustomApplication extends Application {
+public class TestApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Director.beginShow(this)
-                .staffRegistry()
-                .registerRole("/app/" + ApiClient.class.getCanonicalName(), ApiClient.class);
+        Director.beginShow(this);
+
+        final ApiClient apiClient = new ApiClient();
+        Director.register(apiClient);
+
+        Director.register(new ApiClient());
     }
 
     @Override
@@ -25,6 +27,6 @@ public class CustomApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        Director.endShow();
+        Director.endShow(this);
     }
 }

@@ -15,6 +15,10 @@ import br.com.concretesolutions.audience.staff.Filter;
 import br.com.concretesolutions.audience.system.message.PoisonPill;
 import br.com.concretesolutions.audience.tragedy.TragedyException;
 
+/**
+ * Central handler of the actor system. Responsible for dispatching messages and managing
+ * references.
+ */
 public final class ActorSystem {
 
     private static final String TAG = ActorSystem.class.getSimpleName();

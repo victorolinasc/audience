@@ -1,13 +1,13 @@
-package br.com.concretesolutions.audience.system;
+package br.com.concretesolutions.audience.core.concurrent;
 
 import android.os.HandlerThread;
 
-final class ActorThread extends HandlerThread {
+public final class ActorThread extends HandlerThread {
 
     private BaseHandler messageHandler;
 
-    ActorThread() {
-        super("Actor-Thread");
+    public ActorThread() {
+        super("ActorStorage-Thread");
     }
 
     @Override
@@ -16,7 +16,7 @@ final class ActorThread extends HandlerThread {
         messageHandler = new BGInboxHandler(getLooper());
     }
 
-    BaseHandler getMessageHandler() {
+    public BaseHandler getMessageHandler() {
         return messageHandler;
     }
 }

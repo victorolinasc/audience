@@ -1,0 +1,18 @@
+# Actors architecture
+
+The purpouse of this library is to implement a better concurrency model for dealing with Android's complicated lifecycle issues. Instead of thinking in terms of ~threads~ or ~events~, this library opts for implementing an ~ator~ based system.
+
+## Actor
+
+An actor is an asynchronous agent that can send and receive messages. They can run on any scheduler (be it Ui Thread bound or simply asynchronous). 
+
+Every actor has an id (also named actor reference). This is used to identify to which actor a message is due. The model applied in such a system is that an actor reference (id) is needed to send a message. The callback function called when a message is received also has the reference of which actor has sent that message. This is an important difference to events based system as this allows for replying to exactly the one who sent the first message.
+
+
+- ApplicationActor
+- ActivityActor
+- FragmentActor
+- ViewActor
+- ServiceActor
+
+
