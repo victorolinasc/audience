@@ -4,7 +4,7 @@ An actor-message inspired concurrent Android framework.
 
 ## What the hell is this?
 
-Audience is about an actor system for Android. What the hell is this? Well, it is an asynchronous model made famous by [Erlang](http://erlang.org/) and then copied by [Akka](http://akka.io/), amongst other implementations throughout History.
+Audience is about an actor system for Android. What the hell is this? Well, it is an asynchronous model made famous by [Erlang](http://erlang.org/) that inspired [Akka](http://akka.io/) and others.
 
 The basic idea is this: actors are independent components that can only communicate with each other through passing messages.  To do that, they only need each other's references. 
 
@@ -15,7 +15,7 @@ actorRef.tell(message)
         .to(anotherRef);
 ```
 
-With that code, we will send `message` from the actor that has reference `actorRef` to the actor that has reference `anotherRef`.
+With that code, we will send `message` from the actor that has reference `actorRef` to the actor that has reference `anotherRef`. This may be done asynchronously.
 
 ## Actors you say...
 
@@ -115,9 +115,150 @@ anActorRef.tell("load")
     .to(someActorRef);
 ```
 
+Assistant scripts can use none up to two arguments:
+ 
+0. You don't want to reply or do anything else other than execute your callback.
+1. The sender reference.
+2. Our own reference
+
 ## Actor registration and scope
 
-Actors must have a scope. If they didn't, we would leak memory everywhere.
+Actors must have a scope. If they didn't, we would leak memory everywhere. Scopes define for how long an actor should be registered and its callbacks kept. They are needed when you register an actor.
+  
+There are two default scopes currently (with another one coming next):
+
+- Application: like a singleton scope
+- Activity: follows the Activity lifecycle
+
+To register an actor you must either pass a scope reference or an instance which its scope can be inferred. Example:
+ 
+``` java
+// ApiClient is registered as a singleton actor
+actorRegistry.enroll(customApplication, new ApiClient());
+```
+
+Singleton actors are usually registered in the method `Application.onCreate()`. For instance:
+
+``` java
+public class CustomApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Director.beginShow(this)
+                .enroll(this, new ApiClient());
+    }
+}
+```
+
+We will talk about `Director` class in a minute, but in this example we are bootstrapping the system and registering (enrolling) the `ApiClient` instance with the application scope.
+
+All activities might be actors too. If you want your `Activity` to be an actor, all you need to do is to implement the `Actor` interface. Its registration is automatically and the framework handles its lifecycle automatically too. An example:
+
+``` java
+public final class SampleActivity extends AppCompatActivity implements Actor {
+
+    // onCreate and etc...
+
+    // this will be called upon Activity creation
+    @Override
+    public void onActorRegistered(ActorRef ref) {
+        ref.passAssistantScript("load", this::showLoading);
+    }
+    
+    void showLoading() {
+        // do something :)
+    }
+}
+```
+
+## `Director`: managing the whole show
+
+We've seen in the previous section that there is a class `Director`. This class has the callbacks to interact with all parts of `Audience`. It must be used to start the show, end it, handle configuration changes and getting actor references. To start using audience you will need a custom `Application` class with some `Director` calls. Example:
+
+``` java
+public class CustomApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Director.beginShow(this);
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // MUST BE CALLED BEFORE super CALL
+        Director.onConfigurationChanged();
+        super.onConfigurationChanged(newConfig);
+    } 
+    
+    @Override
+    public void onTerminate() {
+        Director.endShow();
+        super.onTerminate();
+    }    
+}
+```
+
+After that you can also use `Director` to find actor references. For example:
+
+``` java
+public final class SampleActivity extends AppCompatActivity implements Actor {
+
+    private void someMethod() {
+        Director.actorRef(this) // returns an ActorRef that represents this activity actor
+            .tell(someMessage)
+            .toActor(ApiClient.class); // singleton actors can be called through its class
+    }
+}
+```
+
+There are other parts of the system that can be interacted with. Please, see at `Director` javadocs.
+
+## Show rules
+
+Now we have all parts for our concurrency model: actors, their references, scopes and thread handling. What we've left out is `ShowRule` which is a message filter. They can be registered globally to handle script and assistant script messages.
+
+A good use case for filters might be logging. You want to debug all your logging messages passing through. This can easily be done with the following filter:
+  
+
+``` java
+public final class LoggingShowRule implements AssistantAndScriptRule {
+
+    private static final String TAG = LoggingShowRule.class.getSimpleName();
+
+    @Override
+    public boolean shouldIntercept(String assistantKey) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldIntercept(Class<?> messageClass) {
+        return true;
+    }
+
+    @Override
+    public MessageEvent<String> interceptAssistantMessage(MessageEvent<String> message) {
+        Log.i(TAG, "Intercepted assistant message: " + message);
+        return message;
+    }
+
+
+    @Override
+    public MessageEvent<?> interceptScriptMessage(MessageEvent<?> message) {
+        Log.i(TAG, "Intercepted script message: " + message);
+        return message;
+    }
+}
+```
+
+Then we need to register it with our `RuleRegistry`:
+
+``` java
+Director.getRuleRegistry().addAssistantAndScriptRule(new LoggingShowRule());
+```
+
+This rule intercepts assistant and script messages. There are also `AssistantRule` and `ScriptRule` if you want more control to which messages your should intercept. Both of them have a `shouldIntercept` method to determine the message should be handled.
 
 ## Features
 
@@ -141,3 +282,9 @@ actorRef.tell(message)
 - Based on Android's concurrent primitives (`Handler`s, `MessageQueue`s and the like).
 
 Other features might be added like *behaviours*.
+
+## LICENSE
+
+APL 2.0
+
+See [LICENSE](LICENSE)

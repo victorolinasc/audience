@@ -6,6 +6,7 @@ import java.util.Map;
 import br.com.concretesolutions.audience.core.MessageEvent;
 import br.com.concretesolutions.audience.core.exception.AssistatScriptNotFoundException;
 import br.com.concretesolutions.audience.core.script.AssistantScript;
+import br.com.concretesolutions.audience.core.script.AssistantScript0;
 import br.com.concretesolutions.audience.core.script.AssistantScript1;
 import br.com.concretesolutions.audience.core.script.AssistantScript2;
 import br.com.concretesolutions.audience.core.script.Script;
@@ -59,7 +60,9 @@ public final class ActorStorage {
 
         if (assistantScript != null) {
 
-            if (assistantScript instanceof AssistantScript1) {
+            if (assistantScript instanceof AssistantScript0) {
+                ((AssistantScript0) assistantScript).receive();
+            } else if (assistantScript instanceof AssistantScript1) {
                 ((AssistantScript1) assistantScript).receive(obj.sender);
             } else if (assistantScript instanceof AssistantScript2) {
                 ((AssistantScript2) assistantScript).receive(obj.sender, obj.receiver);

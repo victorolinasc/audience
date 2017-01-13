@@ -27,14 +27,14 @@ public final class ActivityChoreography implements Application.ActivityLifecycle
 
         Director.play()
                 .getActorRegistry()
-                .enroll(ActorRegistry.DefaultScopes.ACTIVITY, actor);
+                .enroll(ActorRegistry.Scope.ACTIVITY, actor);
 
         final boolean hasOldKey = savedInstanceState != null
                 && savedInstanceState.containsKey(OLD_ACTOR_KEY);
 
         if (hasOldKey) {
 
-            final String newKey = ActorRegistry.DefaultScopes.ACTIVITY
+            final String newKey = ActorRegistry.Scope.ACTIVITY
                     .buildScopeKeyForActor(actor);
 
             Director.getActorRegistry()
@@ -61,7 +61,7 @@ public final class ActivityChoreography implements Application.ActivityLifecycle
             return;
 
         if (inConfigurationChange) {
-            final String currentKey = ActorRegistry.DefaultScopes.ACTIVITY
+            final String currentKey = ActorRegistry.Scope.ACTIVITY
                     .buildScopeKeyForActor((Actor) activity);
 
             outState.putString(OLD_ACTOR_KEY, currentKey);

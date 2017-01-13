@@ -37,10 +37,10 @@ public final class ActorRegistry {
     }
 
     public void enroll(@NonNull Object reference, @NonNull Actor actor) {
-        enroll(DefaultScopes.scopeForClass(reference), actor);
+        enroll(Scope.scopeForClass(reference), actor);
     }
 
-    public void enroll(@NonNull DefaultScopes scope, @NonNull Actor actor) {
+    public void enroll(@NonNull Scope scope, @NonNull Actor actor) {
         final String key = scope.buildScopeKeyForActor(actor);
         storage.put(key, new ActorStorage());
         actor.onActorRegistered(new ActorRef(key));
@@ -52,11 +52,11 @@ public final class ActorRegistry {
         final String key;
 
         if (target instanceof Activity) {
-            key = generateKey(target, DefaultScopes.ACTIVITY.scopeName);
+            key = generateKey(target, Scope.ACTIVITY.scopeName);
         } else if (target instanceof View) {
-            key = generateKey(target, DefaultScopes.VIEW.scopeName);
+            key = generateKey(target, Scope.VIEW.scopeName);
         } else {
-            key = generateKey(target, DefaultScopes.APPLICATION.scopeName);
+            key = generateKey(target, Scope.APPLICATION.scopeName);
         }
 
         if (storage.containsKey(key))
@@ -71,7 +71,7 @@ public final class ActorRegistry {
 
     public ActorRef actorRefForTarget(Class<?> target) {
 
-        final String key = DefaultScopes.APPLICATION.scopeName + target.getCanonicalName();
+        final String key = Scope.APPLICATION.scopeName + target.getCanonicalName();
 
         if (!storage.containsKey(key))
             throw new IllegalArgumentException("No actor registered for reference");
@@ -83,7 +83,7 @@ public final class ActorRegistry {
         reboundPaths.put(oldKey, newKey);
     }
 
-    public enum DefaultScopes {
+    public enum Scope {
 
         APPLICATION("_application/", Collections.singletonList(Application.class)) {
             @Override
@@ -97,7 +97,7 @@ public final class ActorRegistry {
         final String scopeName;
         private final List<Class<?>> refClass;
 
-        DefaultScopes(String scopeName, List<Class<?>> clazz) {
+        Scope(String scopeName, List<Class<?>> clazz) {
             this.scopeName = scopeName;
             this.refClass = clazz;
         }
@@ -106,8 +106,8 @@ public final class ActorRegistry {
             return generateKey(actor, scopeName);
         }
 
-        static DefaultScopes scopeForClass(Object target) {
-            for (DefaultScopes scope : values()) {
+        static Scope scopeForClass(Object target) {
+            for (Scope scope : values()) {
                 for (Class<?> refClas : scope.refClass) {
                     if (refClas.isAssignableFrom(target.getClass())) {
                         return scope;
