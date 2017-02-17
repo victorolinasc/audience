@@ -1,6 +1,33 @@
 <resources>
 
-    <style name="Audience.Widget.TextAppearence.ExpandedToolbar">
-        <item name="android:textSize">25sp</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Base widget styles -->
+        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+
     </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+    <!-- Widget styles -->
+    <style name="AppTheme.Widget" />
+
+    <style name="AppTheme.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Widget.TextView.Title">
+        <item name="android:textSize">@dimen/text_item_title</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
+

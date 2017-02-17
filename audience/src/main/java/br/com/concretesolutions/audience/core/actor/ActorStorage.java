@@ -1,5 +1,7 @@
 package br.com.concretesolutions.audience.core.actor;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,8 @@ import br.com.concretesolutions.audience.core.script.Script3;
 
 public final class ActorStorage {
 
+    private static final String TAG = ActorStorage.class.getName();
+
     private final Map<Class<?>, Script<?>> scripts = new HashMap<>();
     private final Map<String, AssistantScript> assistantScripts = new HashMap<>();
 
@@ -28,6 +32,8 @@ public final class ActorStorage {
     }
 
     public <T> void executeEvent(MessageEvent<T> obj) {
+
+        Log.d(TAG, "Executing event: " + obj);
 
         if (obj.isAssistantMessage())
             // noinspection unchecked

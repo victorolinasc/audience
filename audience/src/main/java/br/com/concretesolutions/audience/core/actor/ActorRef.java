@@ -45,11 +45,11 @@ public final class ActorRef {
         return this;
     }
 
-    public static class MessageBuilder<T> {
+
+    public static final class MessageBuilder<T> {
 
         final ActorRef sender;
         final T message;
-        ActorRef receiver;
         boolean isOnStage;
 
         MessageBuilder(T message, ActorRef sender) {
@@ -57,12 +57,11 @@ public final class ActorRef {
             this.sender = sender;
         }
 
-        public void toActor(Class<?> target) {
+        public void toActor(Class<? extends Actor> target) {
             to(Director.actorRef(target));
         }
 
         public void to(ActorRef receiver) {
-            this.receiver = receiver;
             Director.play().send(MessageEvent.create(sender, receiver, message, isOnStage));
         }
 

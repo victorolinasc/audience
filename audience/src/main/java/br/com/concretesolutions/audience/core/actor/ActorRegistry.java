@@ -1,18 +1,18 @@
 package br.com.concretesolutions.audience.core.actor;
 
-import android.app.Activity;
-import android.app.Application;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.support.annotation.Nullable;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import br.com.concretesolutions.audience.core.exception.TragedyException;
 
 public final class ActorRegistry {
+
+    private static final String OLD_ACTOR_KEY =
+            "br.com.concretesolutions.audience.core.actor.Audience.OLD_ACTOR_KEY";
 
     private final Map<String, ActorStorage> storage = new HashMap<>(100);
     private final Map<String, String> reboundPaths = new HashMap<>();
@@ -36,31 +36,53 @@ public final class ActorRegistry {
         throw new TragedyException("No actor registered");
     }
 
-    public void enroll(@NonNull Object reference, @NonNull Actor actor) {
-        enroll(Scope.scopeForClass(reference), actor);
+    public void enrollSingelton(@NonNull Actor actor) {
+        innerEnroll(actor, actor.getClass().getCanonicalName());
     }
 
-    public void enroll(@NonNull Scope scope, @NonNull Actor actor) {
-        final String key = scope.buildScopeKeyForActor(actor);
+    public void enroll(@NonNull Actor actor) {
+        innerEnroll(actor, generateKey(actor));
+    }
+
+    private void innerEnroll(@NonNull final Actor actor, @NonNull final String key) {
         storage.put(key, new ActorStorage());
         actor.onActorRegistered(new ActorRef(key));
+    }
+
+    public void enroll(@NonNull Actor actor, @Nullable Bundle savedInstanceState) {
+
+        enroll(actor);
+
+        final boolean hasOldKey = savedInstanceState != null
+                && savedInstanceState.containsKey(OLD_ACTOR_KEY);
+
+        if (hasOldKey) {
+            rebindPath(savedInstanceState.getString(OLD_ACTOR_KEY), actor);
+        }
+    }
+
+    public void take5(Actor actor, Bundle outState) {
+        outState.putString(OLD_ACTOR_KEY, actorRefForTarget(actor).ref);
     }
 
     @NonNull
     public ActorRef actorRefForTarget(@NonNull Actor target) {
 
-        final String key;
+        final String targetKey = generateKey(target);
 
-        if (target instanceof Activity) {
-            key = generateKey(target, Scope.ACTIVITY.scopeName);
-        } else if (target instanceof View) {
-            key = generateKey(target, Scope.VIEW.scopeName);
-        } else {
-            key = generateKey(target, Scope.APPLICATION.scopeName);
-        }
+        if (storage.containsKey(targetKey))
+            return new ActorRef(targetKey);
 
-        if (storage.containsKey(key))
-            return new ActorRef(key);
+        throw new IllegalArgumentException("No actor registered with this key");
+    }
+
+    @NonNull
+    public ActorRef actorRefForTarget(@NonNull Class<? extends Actor> target) {
+
+        final String targetKey = target.getCanonicalName();
+
+        if (storage.containsKey(targetKey))
+            return new ActorRef(targetKey);
 
         throw new IllegalArgumentException("No actor registered with this key");
     }
@@ -69,54 +91,8 @@ public final class ActorRegistry {
         storage.remove(actorRef.ref);
     }
 
-    public ActorRef actorRefForTarget(Class<?> target) {
-
-        final String key = Scope.APPLICATION.scopeName + target.getCanonicalName();
-
-        if (!storage.containsKey(key))
-            throw new IllegalArgumentException("No actor registered for reference");
-
-        return new ActorRef(key);
-    }
-
-    public void rebindPath(String oldKey, String newKey) {
-        reboundPaths.put(oldKey, newKey);
-    }
-
-    public enum Scope {
-
-        APPLICATION("_application/", Collections.singletonList(Application.class)) {
-            @Override
-            String buildScopeKeyForActor(Actor actor) {
-                return this.scopeName + actor.getClass().getCanonicalName();
-            }
-        },
-        ACTIVITY("_activity/", Collections.singletonList(Activity.class)),
-        VIEW("_view/", Collections.singletonList(View.class));
-
-        final String scopeName;
-        private final List<Class<?>> refClass;
-
-        Scope(String scopeName, List<Class<?>> clazz) {
-            this.scopeName = scopeName;
-            this.refClass = clazz;
-        }
-
-        String buildScopeKeyForActor(Actor actor) {
-            return generateKey(actor, scopeName);
-        }
-
-        static Scope scopeForClass(Object target) {
-            for (Scope scope : values()) {
-                for (Class<?> refClas : scope.refClass) {
-                    if (refClas.isAssignableFrom(target.getClass())) {
-                        return scope;
-                    }
-                }
-            }
-
-            throw new IllegalArgumentException("Target scope is non existent");
-        }
+    public void rebindPath(String oldKey, Actor actor) {
+        reboundPaths.put(oldKey, generateKey(actor));
     }
 
     void clear() {
@@ -124,7 +100,9 @@ public final class ActorRegistry {
         reboundPaths.clear();
     }
 
-    private static String generateKey(Actor actor, String scope) {
-        return scope + actor.getClass().getCanonicalName() + System.identityHashCode(actor);
+    private static String generateKey(Actor actor) {
+        return actor.getClass().getCanonicalName()
+                + System.identityHashCode(actor);
     }
+
 }

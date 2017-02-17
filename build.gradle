@@ -3,8 +3,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0-beta2'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.0-beta4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
     }
 }
 
@@ -16,4 +17,8 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    testButler = '1.2.0'
 }

@@ -37,6 +37,14 @@ public final class Director {
         system.handleConfigurationChange();
     }
 
+    public static boolean isInConfigurationChange() {
+        return system.isInConfigurationChange();
+    }
+
+    public static void setInConfigurationChange(boolean inConfigurationChange) {
+        system.setInConfigurationChange(inConfigurationChange);
+    }
+
     public static void endShow() {
         system.shutdown();
     }
@@ -57,7 +65,7 @@ public final class Director {
     }
 
     @NonNull
-    public static ActorRef actorRef(@NonNull Class<?> target) {
+    public static ActorRef actorRef(@NonNull Class<? extends Actor> target) {
         return system.actorRef(target);
     }
 }

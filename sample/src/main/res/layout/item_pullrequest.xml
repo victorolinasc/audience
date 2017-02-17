@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="8dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp">
+
+        <!-- PullRequest title and body -->
+        <TextView
+            android:id="@+id/pullrequest_title"
+            style="@style/AppTheme.Widget.TextView.Title"
+            tools:text="Pull Request title" />
+
+        <TextView
+            android:id="@+id/pullrequest_body"
+            style="@style/AppTheme.Widget.TextView"
+            app:layout_constraintTop_toBottomOf="@id/pullrequest_title"
+            tools:text="Pull Request body that may contain markdown" />
+
+        <!-- User column -->
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:contentDescription="@string/description_user_icon"
+            app:layout_constraintTop_toBottomOf="@id/pullrequest_body"
+            app:srcCompat="@drawable/ic_face" />
+
+        <TextView
+            android:id="@+id/username"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            app:layout_constraintStart_toEndOf="@id/user_icon"
+            app:layout_constraintTop_toBottomOf="@id/user_icon"
+            app:layout_constraintTop_toTopOf="@id/user_icon"
+            tools:text="Username" />
+
+        <TextView
+            android:id="@+id/created_at"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            app:layout_constraintStart_toEndOf="@id/user_icon"
+            app:layout_constraintTop_toBottomOf="@id/username"
+            tools:text="2005-10-01" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

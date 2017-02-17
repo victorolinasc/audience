@@ -1,0 +1,46 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+checkstyle {
+    toolVersion = '6.7'
+}
+
+task checkstyle(type: Checkstyle) {
+
+    configFile file("$rootDir/tools/linters/checkstyle.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low"
+    classes = files("$project.buildDir/intermediates/classes")
+    excludeFilter = file("$rootProject.rootDir/tools/linters/findbugs-filter.xml")
+
+    source = fileTree('src/main/java/')
+    classpath = files()
+    reports {
+        xml.enabled = false
+        xml.withMessages = true
+        html.enabled = true
+        xml.destination "$project.buildDir/reports/findbugs/findbugs.xml"
+        html.destination "$project.buildDir/reports/findbugs/findbugs.html"
+    }
+}
+
+check.dependsOn 'checkstyle', 'findbugs'
+
+afterEvaluate { project ->
+    project.android.productFlavors.each { flavor ->
+        project.android.buildTypes.each { type ->
+            tasks["compile${flavor.name.capitalize()}${type.name.capitalize()}Sources"].dependsOn(['checkstyle'])
+        }
+    }
+}

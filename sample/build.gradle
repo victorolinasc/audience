@@ -1,20 +1,32 @@
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath 'me.tatarka:gradle-retrolambda:3.4.0' }
+}
+
+repositories { maven { url "https://jitpack.io" } }
+
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "br.com.concretesolutions.audience.demo"
-        minSdkVersion 17
+        applicationId "br.com.concretesolutions.audience.sample"
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
-        jackOptions {
-            enabled true
+        vectorDrawables.useSupportLibrary = true
 
-        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -23,30 +35,42 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
-final supportVersion = '25.1.0'
-final okhttpVersion = '3.4.1'
-final retrofitVersion = '2.1.0'
+final support = '25.1.1'
+final butterknife = '8.5.1'
+final okhttp = '3.5.0'
+final retrofit = '2.1.0'
+final commonmark = '0.8.0'
 
 dependencies {
 
+    // Async
     compile project(':audience')
 
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:design:$supportVersion"
+    // Support
+    compile "com.android.support:appcompat-v7:$support"
+    compile "com.android.support:cardview-v7:$support"
+    compile "com.android.support:recyclerview-v7:$support"
+    compile "com.android.support:design:$support"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
 
-    compile 'com.jakewharton.timber:timber:4.1.2'
-    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
-    compile "com.squareup.moshi:moshi:1.2.0"
+    // Boilerplate
+    compile "com.jakewharton:butterknife:$butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
-    testCompile 'junit:junit:4.12'
+    // REST
+    compile "com.squareup.retrofit2:retrofit:$retrofit"
+    compile "com.squareup.retrofit2:converter-moshi:$retrofit"
+    compile "com.squareup.okhttp3:okhttp:$okhttp"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    compile 'com.squareup.moshi:moshi:1.3.1'
+
+    // Others
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.atlassian.commonmark:commonmark:$commonmark"
+    compile "com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:$commonmark"
+    compile "com.atlassian.commonmark:commonmark-ext-autolink:$commonmark"
+    compile "com.atlassian.commonmark:commonmark-ext-gfm-tables:$commonmark"
+    compile "com.atlassian.commonmark:commonmark-ext-heading-anchor:$commonmark"
 }

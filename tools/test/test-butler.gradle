@@ -1,0 +1,37 @@
+final butlerPackage = 'com.linkedin.android.testbutler'
+final butlerApkPath = "$rootDir/tools/test-butler/test-butler-app-${rootProject.ext.testButler}.apk"
+
+/**
+ * This task installs the test-butler apk in all emulators if needed
+ */
+task installButlerApk {
+
+    doLast {
+        logger.info("Verifying test-butler installation in emulators")
+
+        final adb = "$android.sdkDirectory.absolutePath/platform-tools/adb"
+
+        final String[] split = "$adb devices -l".execute().text.split("\\r?\\n")
+
+        split.each {
+
+            if (it.isEmpty() || !it.startsWith('emulator-'))
+                return;
+
+            logger.info("Emulator: $it")
+
+            final emu = it.split("\\s")[0]
+
+            if ("$adb -s $emu shell pm list packages".execute().text.contains(butlerPackage))
+                return;
+
+            final installResult = "$adb -s $emu install $butlerApkPath".execute().text
+
+            if (!installResult.contains("Success"))
+                logger.log(LogLevel.ERROR, "Could not install APK. Install output:\n$installResult")
+
+            else
+                logger.info("Installed $butlerApkPath in $emu successfully")
+        }
+    }
+}

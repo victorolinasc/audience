@@ -18,6 +18,7 @@ public final class ActorSystem {
     private final RuleRegistry ruleRegistry = new RuleRegistry();
 
     private boolean stopped = false;
+    private boolean inConfigurationChange;
 
     /**
      * Shuts down the actorRefForTarget system.
@@ -33,7 +34,15 @@ public final class ActorSystem {
     }
 
     public void handleConfigurationChange() {
-        activityChoreography.setInConfigurationChange(true);
+        setInConfigurationChange(true);
+    }
+
+    public boolean isInConfigurationChange() {
+        return inConfigurationChange;
+    }
+
+    public void setInConfigurationChange(boolean inConfigurationChange) {
+        this.inConfigurationChange = inConfigurationChange;
     }
 
     @NonNull
@@ -42,7 +51,7 @@ public final class ActorSystem {
     }
 
     @NonNull
-    public ActorRef actorRef(@NonNull Class<?> target) {
+    public ActorRef actorRef(@NonNull Class<? extends Actor> target) {
         return actorRegistry.actorRefForTarget(target);
     }
 

@@ -1,5 +1,7 @@
 package br.com.concretesolutions.audience.core;
 
+import android.support.annotation.NonNull;
+
 import br.com.concretesolutions.audience.core.actor.ActorRef;
 
 public final class MessageEvent<T> {
@@ -12,17 +14,17 @@ public final class MessageEvent<T> {
     private MessageEvent(final ActorRef sender,
                          final ActorRef receiver,
                          final T message,
-                         boolean isOnStage) {
+                         final boolean isOnStage) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.isOnStage = isOnStage;
     }
 
-    public static <T> MessageEvent<T> create(final ActorRef sender,
-                                             final ActorRef receiver,
-                                             final T message,
-                                             boolean isOnStage) {
+    public static <T> MessageEvent<T> create(@NonNull final ActorRef sender,
+                                             @NonNull final ActorRef receiver,
+                                             @NonNull final T message,
+                                             final boolean isOnStage) {
         return new MessageEvent<>(sender, receiver, message, isOnStage);
     }
 
@@ -31,17 +33,11 @@ public final class MessageEvent<T> {
     }
 
     public Class<?> messageClass() {
-
-        final Class<?> messageClass = message.getClass();
-
-        if (messageClass.isAnonymousClass()
-                || messageClass.getSimpleName().contains("-$Lambda$"))
-            return messageClass.getInterfaces()[0];
-
-        return messageClass;
+        return ClassUtil.messageClass(message);
     }
 
     @Override
+    @SuppressWarnings("PMD")
     public String toString() {
         final StringBuilder sb = new StringBuilder("MessageEvent{");
         sb.append("sender=").append(sender);
