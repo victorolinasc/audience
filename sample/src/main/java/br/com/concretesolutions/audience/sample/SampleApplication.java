@@ -7,7 +7,6 @@ import com.facebook.stetho.Stetho;
 
 import br.com.concretesolutions.audience.core.Director;
 import br.com.concretesolutions.audience.core.rule.LoggingShowRule;
-import br.com.concretesolutions.audience.retrofit.RetrofitActor;
 import br.com.concretesolutions.audience.sample.data.api.ApiProvider;
 
 public class SampleApplication extends Application {
@@ -18,9 +17,7 @@ public class SampleApplication extends Application {
         Stetho.initializeWithDefaults(this);
         Director.beginShow(this)
                 .toRuleRegistry()
-                .addAssistantAndScriptRule(new LoggingShowRule())
-                .toActorRegistry()
-                .enrollSingleton(new RetrofitActor());
+                .addAssistantAndScriptRule(new LoggingShowRule());
 
         ApiProvider.init("https://api.github.com");
     }

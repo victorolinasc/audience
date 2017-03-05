@@ -4,6 +4,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import br.com.concretesolutions.audience.core.Director;
+import br.com.concretesolutions.audience.retrofit.RetrofitActor;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
@@ -12,6 +14,7 @@ import retrofit2.Retrofit;
 public final class AudienceCallAdapterFactory extends CallAdapter.Factory {
 
     public static AudienceCallAdapterFactory create() {
+        Director.getActorRegistry().enrollSingleton(new RetrofitActor());
         return new AudienceCallAdapterFactory();
     }
 
