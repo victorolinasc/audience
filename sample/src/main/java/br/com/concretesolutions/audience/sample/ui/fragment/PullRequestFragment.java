@@ -14,18 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.concretesolutions.audience.core.Director;
+import br.com.concretesolutions.audience.core.actor.Actor;
 import br.com.concretesolutions.audience.core.actor.ActorRef;
-import br.com.concretesolutions.audience.core.actor.SupportFragmentActor;
+import br.com.concretesolutions.audience.retrofit.exception.ClientException;
+import br.com.concretesolutions.audience.retrofit.exception.NetworkException;
 import br.com.concretesolutions.audience.sample.R;
-import br.com.concretesolutions.audience.sample.api.exception.ClientException;
-import br.com.concretesolutions.audience.sample.api.exception.NetworkException;
-import br.com.concretesolutions.audience.sample.api.model.PullRequestVO;
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.sample.data.api.model.PullRequestVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.sample.ui.adapter.PullRequestsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PullRequestFragment extends BaseFragment {
+public class PullRequestFragment extends BaseFragment implements Actor {
 
     public static PullRequestFragment newInstance(RepositoryVO repo, boolean open) {
         final PullRequestFragment fragment = new PullRequestFragment();
@@ -51,6 +51,7 @@ public class PullRequestFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_pullrequests, container, false);
         ButterKnife.bind(this, view);
 

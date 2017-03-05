@@ -26,7 +26,7 @@ public final class Director {
      *
      * @param application The {@link Application} context for registering callbacks.
      */
-    public static ActorRegistry beginShow(Application application) {
+    public static ActorSystem beginShow(Application application) {
         return system.begin(application);
     }
 

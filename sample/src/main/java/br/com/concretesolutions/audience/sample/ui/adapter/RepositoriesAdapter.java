@@ -19,10 +19,10 @@ import java.util.List;
 
 import br.com.concretesolutions.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.sample.R;
-import br.com.concretesolutions.audience.sample.api.Api;
-import br.com.concretesolutions.audience.sample.api.ApiManager;
-import br.com.concretesolutions.audience.sample.api.model.PageResultVO;
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.sample.data.api.Api;
+import br.com.concretesolutions.audience.sample.data.api.ApiProvider;
+import br.com.concretesolutions.audience.sample.data.api.model.PageResultVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.sample.ui.activity.PullRequestsActivity;
 import br.com.concretesolutions.audience.sample.ui.viewholder.ErrorItemViewHolder;
 import br.com.concretesolutions.audience.sample.ui.viewholder.LoadingViewHolder;
@@ -130,7 +130,11 @@ public final class RepositoriesAdapter
             errorString = -1;
             notifyItemChanged(repositories.size() - 1);
         }
-        ApiManager.sendCall(activityRef, api -> api.getRepositories("language:java", Api.Sort.stars, pageNo));
+
+        ApiProvider.getApi()
+                .getRepositories("language:java", Api.Sort.stars, pageNo, 30)
+                .replyTo(activityRef)
+                .tell();
     }
 
     public boolean handleException(@StringRes int errorString) {

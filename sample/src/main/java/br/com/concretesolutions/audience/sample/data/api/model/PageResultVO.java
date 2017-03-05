@@ -1,4 +1,4 @@
-package br.com.concretesolutions.audience.sample.api.model;
+package br.com.concretesolutions.audience.sample.data.api.model;
 
 
 import com.squareup.moshi.Json;

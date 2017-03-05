@@ -3,6 +3,7 @@ package br.com.concretesolutions.audience.core.actor;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import br.com.concretesolutions.audience.core.Director;
 import br.com.concretesolutions.audience.core.MessageEvent;
 import br.com.concretesolutions.audience.core.concurrent.MessageDispatcher;
 
@@ -59,9 +60,13 @@ public final class ActorSystem {
         actorRegistry.clean(actorRef);
     }
 
-    public ActorRegistry begin(Application application) {
+    public ActorSystem begin(Application application) {
         application.registerActivityLifecycleCallbacks(activityChoreography);
-        return actorRegistry;
+        return this;
+    }
+
+    public RuleRegistry toRuleRegistry() {
+        return Director.getRuleRegistry();
     }
 
     <T> void send(MessageEvent<T> message) {

@@ -1,4 +1,4 @@
-package br.com.concretesolutions.audience.sample.api.exception;
+package br.com.concretesolutions.audience.retrofit.exception;
 
 public class ServerException extends ApiException {
 

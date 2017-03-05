@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.com.concretesolutions.audience.core.Director;
 import br.com.concretesolutions.audience.core.MessageEvent;
 import br.com.concretesolutions.audience.core.rule.AssistantAndScriptRule;
 import br.com.concretesolutions.audience.core.rule.AssistantRule;
@@ -51,6 +52,10 @@ public final class RuleRegistry {
     public void clear() {
         scriptRules.clear();
         assistantRules.clear();
+    }
+
+    public ActorRegistry toActorRegistry() {
+        return Director.getActorRegistry();
     }
 
     private <T> MessageEvent<?> runScriptFilters(MessageEvent<T> message) {

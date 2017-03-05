@@ -2,6 +2,7 @@ package br.com.concretesolutions.audience.core.actor;
 
 import br.com.concretesolutions.audience.core.Director;
 import br.com.concretesolutions.audience.core.MessageEvent;
+import br.com.concretesolutions.audience.core.script.AssistantScript0;
 import br.com.concretesolutions.audience.core.script.AssistantScript1;
 import br.com.concretesolutions.audience.core.script.AssistantScript2;
 import br.com.concretesolutions.audience.core.script.Script1;
@@ -32,6 +33,11 @@ public final class ActorRef {
 
     public <T> ActorRef passScript(Class<T> clazz, Script3<T> script) {
         Director.getActorRegistry().storageForRef(ref).passScript(clazz, script);
+        return this;
+    }
+
+    public ActorRef passAssistantScript(String eventRef, AssistantScript0 script) {
+        Director.getActorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
         return this;
     }
 

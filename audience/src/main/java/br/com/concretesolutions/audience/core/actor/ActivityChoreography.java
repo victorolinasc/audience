@@ -3,6 +3,7 @@ package br.com.concretesolutions.audience.core.actor;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import br.com.concretesolutions.audience.core.Director;
 
@@ -13,6 +14,12 @@ final class ActivityChoreography implements Application.ActivityLifecycleCallbac
 
         // Configuration change finished
         Director.setInConfigurationChange(false);
+
+        if (activity instanceof FragmentActivity) {
+            ((FragmentActivity) activity)
+                    .getSupportFragmentManager()
+                    .registerFragmentLifecycleCallbacks(new FragmentChoreography(), true);
+        }
 
         // Not an actor Activity
         if (!(activity instanceof Actor)) {

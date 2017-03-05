@@ -1,18 +1,20 @@
 package br.com.concretesolutions.audience.sample.ui.activity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
+import br.com.concretesolutions.audience.core.actor.Actor;
+import br.com.concretesolutions.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.sample.R;
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.sample.ui.adapter.PullRequestsPagerAdapter;
 import butterknife.BindView;
 
-public class PullRequestsActivity extends BaseActivity {
+public class PullRequestsActivity extends BaseActivity implements Actor {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -21,30 +23,36 @@ public class PullRequestsActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    private RepositoryVO repository;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pullrequests);
 
-        this.repository = getIntent().getExtras().getParcelable("repository");
+        final RepositoryVO repository = getIntent().getExtras().getParcelable("repository");
 
-        setSupportActionBar(toolbar);
-        // noinspection ConstantConditions
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        viewPager.setAdapter(new PullRequestsPagerAdapter(getSupportFragmentManager(), repository));
-        tabLayout.setupWithViewPager(viewPager);
+        adjustToolbar(repository);
+        setupViewPager(repository);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
 
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
+    @Override
+    public void onActorRegistered(ActorRef thisRef) {
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    private void adjustToolbar(RepositoryVO repository) {
+        setSupportActionBar(toolbar);
+        // noinspection ConstantConditions
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("PRs of " + repository.getName());
+    }
+
+    private void setupViewPager(RepositoryVO repository) {
+        viewPager.setAdapter(new PullRequestsPagerAdapter(getSupportFragmentManager(), repository));
+        tabLayout.setupWithViewPager(viewPager);
     }
 }

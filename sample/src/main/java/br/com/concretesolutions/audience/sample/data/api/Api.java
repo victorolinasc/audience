@@ -1,10 +1,11 @@
-package br.com.concretesolutions.audience.sample.api;
+package br.com.concretesolutions.audience.sample.data.api;
 
 import java.util.List;
 
-import br.com.concretesolutions.audience.sample.api.model.PageResultVO;
-import br.com.concretesolutions.audience.sample.api.model.PullRequestVO;
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.retrofit.calladapter.MessageCall;
+import br.com.concretesolutions.audience.sample.data.api.model.PageResultVO;
+import br.com.concretesolutions.audience.sample.data.api.model.PullRequestVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -26,13 +27,14 @@ public interface Api {
     }
 
     @GET("search/repositories")
-    Call<PageResultVO<RepositoryVO>> getRepositories(
+    MessageCall<PageResultVO<RepositoryVO>> getRepositories(
             @Query("q") String languageKeyValue,
             @Query("sort") Sort sort,
-            @Query("page") Integer page);
+            @Query("page") int page,
+            @Query("per_page") int perPage);
 
     @GET("repos/{owner}/{repo}/pulls")
-    Call<List<PullRequestVO>> getPullRequests(
+    MessageCall<List<PullRequestVO>> getPullRequests(
             @Path("owner") String owner,
             @Path("repo") String repo,
             @Query("state") State state,

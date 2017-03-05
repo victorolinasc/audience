@@ -22,7 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.PullRequestsActivity" />
+        <activity
+            android:name=".ui.activity.PullRequestsActivity"
+            android:parentActivityName=".ui.activity.RepositoriesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.RepositoriesActivity" />
+        </activity>
     </application>
 
 </manifest>

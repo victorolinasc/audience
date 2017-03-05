@@ -1,4 +1,4 @@
-package br.com.concretesolutions.audience.sample.api.model;
+package br.com.concretesolutions.audience.sample.data.api.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

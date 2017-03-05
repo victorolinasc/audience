@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.concretesolutions.audience.core.Director;
 import br.com.concretesolutions.audience.core.exception.TragedyException;
 
 public final class ActorRegistry {
@@ -36,17 +37,18 @@ public final class ActorRegistry {
         throw new TragedyException("No actor registered");
     }
 
-    public void enrollSingelton(@NonNull Actor actor) {
-        innerEnroll(actor, actor.getClass().getCanonicalName());
+    public ActorRegistry enrollSingleton(@NonNull SingletonActor actor) {
+        return innerEnroll(actor, actor.getClass().getCanonicalName());
     }
 
-    public void enroll(@NonNull Actor actor) {
-        innerEnroll(actor, generateKey(actor));
+    public ActorRegistry enroll(@NonNull Actor actor) {
+        return innerEnroll(actor, generateKey(actor));
     }
 
-    private void innerEnroll(@NonNull final Actor actor, @NonNull final String key) {
+    private ActorRegistry innerEnroll(@NonNull final Actor actor, @NonNull final String key) {
         storage.put(key, new ActorStorage());
         actor.onActorRegistered(new ActorRef(key));
+        return this;
     }
 
     public void enroll(@NonNull Actor actor, @Nullable Bundle savedInstanceState) {
@@ -87,11 +89,15 @@ public final class ActorRegistry {
         throw new IllegalArgumentException("No actor registered with this key");
     }
 
-    public void clean(ActorRef actorRef) {
+    public RuleRegistry toRuleRegistry() {
+        return Director.getRuleRegistry();
+    }
+
+    void clean(ActorRef actorRef) {
         storage.remove(actorRef.ref);
     }
 
-    public void rebindPath(String oldKey, Actor actor) {
+    void rebindPath(String oldKey, Actor actor) {
         reboundPaths.put(oldKey, generateKey(actor));
     }
 

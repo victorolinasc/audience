@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.sample.ui.fragment.PullRequestFragment;
 
 public class PullRequestsPagerAdapter extends FragmentPagerAdapter {

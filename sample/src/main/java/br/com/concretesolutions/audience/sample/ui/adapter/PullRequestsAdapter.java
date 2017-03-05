@@ -35,10 +35,10 @@ import java.util.Set;
 
 import br.com.concretesolutions.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.sample.R;
-import br.com.concretesolutions.audience.sample.api.Api;
-import br.com.concretesolutions.audience.sample.api.ApiManager;
-import br.com.concretesolutions.audience.sample.api.model.PullRequestVO;
-import br.com.concretesolutions.audience.sample.api.model.RepositoryVO;
+import br.com.concretesolutions.audience.sample.data.api.Api;
+import br.com.concretesolutions.audience.sample.data.api.ApiProvider;
+import br.com.concretesolutions.audience.sample.data.api.model.PullRequestVO;
+import br.com.concretesolutions.audience.sample.data.api.model.RepositoryVO;
 import br.com.concretesolutions.audience.sample.ui.activity.PullRequestsActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,12 +154,14 @@ public final class PullRequestsAdapter
     }
 
     public void loadRepositories() {
-        ApiManager.sendCall(fragmentRef, api ->
-                api.getPullRequests(
+        ApiProvider.getApi()
+                .getPullRequests(
                         repo.getOwner().getLogin(),
                         repo.getName(),
                         Api.State.isOpen(open),
-                        pageNo));
+                        pageNo)
+                .replyTo(fragmentRef)
+                .tell();
     }
 
     private static class LoadingViewHolder extends RecyclerView.ViewHolder {

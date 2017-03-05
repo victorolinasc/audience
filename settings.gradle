@@ -1,1 +1,1 @@
-include ':audience', ':sample'
+include ':audience', ':sample', ':audience-retrofit'
