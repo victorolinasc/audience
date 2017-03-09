@@ -43,7 +43,7 @@ public final class ActorStorage {
             handleScriptMessage(obj);
     }
 
-    private <T> void handleScriptMessage(MessageEvent<T> obj) {
+    <T> void handleScriptMessage(MessageEvent<T> obj) {
         // noinspection unchecked
         final Script<T> script = (Script<T>) scripts.get(obj.messageClass());
 
@@ -61,7 +61,7 @@ public final class ActorStorage {
         }
     }
 
-    private void handleAssistantMessage(MessageEvent<String> obj) {
+    void handleAssistantMessage(MessageEvent<String> obj) {
         final AssistantScript assistantScript = assistantScripts.get(obj.message);
 
         if (assistantScript != null) {

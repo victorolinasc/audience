@@ -43,8 +43,14 @@ Done! ;)
 After that, when you have an instance of your Retrofit proxy, you can call methods on it and use the returned `MessageCall` to send messages to RetrofitActor.
 
 ```java
-ApiProvider.getApi()
+ApiProvider.getApi() // simple singleton providing our Proxy
         .getRepositories("language:java", Api.Sort.stars, pageNo, 30)
-        .replyTo(activityRef)
-        .tell();
+        .replyTo(activityRef) // could be any ref
+        .tell(); // fire the call away
 ```
+
+## Architecture
+
+This module has an `ApplicationActor` implementation: `RetrofitActor`. This class is registered with the `Director` once the `CallAdapterFactory.create()` method is called.
+ 
+The message it receives is a `MessageCall<T>` populated by the Retrofit proxy. This instance needs an `ActorRef` to reply back with the result of the API call. 

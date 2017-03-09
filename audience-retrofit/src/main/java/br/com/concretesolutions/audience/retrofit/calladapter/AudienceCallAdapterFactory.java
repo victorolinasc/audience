@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 public final class AudienceCallAdapterFactory extends CallAdapter.Factory {
 
     public static AudienceCallAdapterFactory create() {
-        Director.getActorRegistry().enrollSingleton(new RetrofitActor());
+        Director.actorRegistry().enrollSingleton(new RetrofitActor());
         return new AudienceCallAdapterFactory();
     }
 

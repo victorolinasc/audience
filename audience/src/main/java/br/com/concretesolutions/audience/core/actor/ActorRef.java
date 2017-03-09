@@ -22,35 +22,34 @@ public final class ActorRef {
     }
 
     public <T> ActorRef passScript(Class<T> clazz, Script1<T> script) {
-        Director.getActorRegistry().storageForRef(ref).passScript(clazz, script);
+        Director.actorRegistry().storageForRef(ref).passScript(clazz, script);
         return this;
     }
 
     public <T> ActorRef passScript(Class<T> clazz, Script2<T> script) {
-        Director.getActorRegistry().storageForRef(ref).passScript(clazz, script);
+        Director.actorRegistry().storageForRef(ref).passScript(clazz, script);
         return this;
     }
 
     public <T> ActorRef passScript(Class<T> clazz, Script3<T> script) {
-        Director.getActorRegistry().storageForRef(ref).passScript(clazz, script);
+        Director.actorRegistry().storageForRef(ref).passScript(clazz, script);
         return this;
     }
 
     public ActorRef passAssistantScript(String eventRef, AssistantScript0 script) {
-        Director.getActorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
+        Director.actorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
         return this;
     }
 
     public ActorRef passAssistantScript(String eventRef, AssistantScript1 script) {
-        Director.getActorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
+        Director.actorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
         return this;
     }
 
     public ActorRef passAssistantScript(String eventRef, AssistantScript2 script) {
-        Director.getActorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
+        Director.actorRegistry().storageForRef(ref).passAssistantScript(eventRef, script);
         return this;
     }
-
 
     public static final class MessageBuilder<T> {
 

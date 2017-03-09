@@ -55,7 +55,7 @@ public final class RuleRegistry {
     }
 
     public ActorRegistry toActorRegistry() {
-        return Director.getActorRegistry();
+        return Director.actorRegistry();
     }
 
     private <T> MessageEvent<?> runScriptFilters(MessageEvent<T> message) {

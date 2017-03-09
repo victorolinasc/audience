@@ -50,12 +50,12 @@ public final class Director {
     }
 
     @NonNull
-    public static ActorRegistry getActorRegistry() {
+    public static ActorRegistry actorRegistry() {
         return system.getActorRegistry();
     }
 
     @NonNull
-    public static RuleRegistry getRuleRegistry() {
+    public static RuleRegistry ruleRegistry() {
         return system.getRuleRegistry();
     }
 

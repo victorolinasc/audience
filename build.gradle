@@ -10,6 +10,31 @@ buildscript {
     }
 }
 
+ext {
+
+    buildTools = '25.0.2'
+    compile = 25
+
+    // Android dependencies
+    support = '25.2.0'
+
+    okHttp = '3.6.0'
+
+    // Fixtures
+    requestMatcher = '2.1.0'
+
+    // Test local
+    junit = '4.12'
+    hamcrest = '1.3'
+    robolectric = '3.2.2'
+
+    // Test instrumented
+    testButler = '1.2.0'
+    espresso = '2.2.2'
+    supportRunner = '0.5'
+
+}
+
 allprojects {
     repositories {
         jcenter()
@@ -20,6 +45,19 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext {
-    testButler = '1.2.0'
+void includeTestDeps(dependencies) {
+
+    // Local test deps
+    dependencies.testCompile "junit:junit:$ext.junit"
+    dependencies.testCompile "org.robolectric:robolectric:$ext.robolectric"
+    dependencies.testCompile "org.hamcrest:hamcrest-all:$ext.hamcrest"
+    dependencies.testCompile "br.com.concretesolutions:requestmatcher:$ext.requestMatcher"
+
+    // Instrumented tests deps
+    dependencies.androidTestCompile "com.android.support:support-annotations:$ext.support"
+    dependencies.androidTestCompile "com.android.support.test.espresso:espresso-core:$ext.espresso"
+    dependencies.androidTestCompile "com.linkedin.testbutler:test-butler-library:$ext.testButler"
+    dependencies.androidTestCompile "com.android.support.test:runner:$ext.supportRunner"
+    dependencies.androidTestCompile "br.com.concretesolutions:requestmatcher:$ext.requestMatcher"
+    dependencies.androidTestCompile "com.squareup.okhttp3:mockwebserver:$ext.okHttp"
 }

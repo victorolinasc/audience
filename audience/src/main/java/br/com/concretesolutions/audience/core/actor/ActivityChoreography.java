@@ -26,7 +26,7 @@ final class ActivityChoreography implements Application.ActivityLifecycleCallbac
             return;
         }
 
-        Director.getActorRegistry()
+        Director.actorRegistry()
                 .enroll((Actor) activity, savedInstanceState);
     }
 
@@ -53,7 +53,7 @@ final class ActivityChoreography implements Application.ActivityLifecycleCallbac
             return;
 
         if (Director.isInConfigurationChange()) {
-            Director.getActorRegistry()
+            Director.actorRegistry()
                     .take5((Actor) activity, outState);
         }
     }

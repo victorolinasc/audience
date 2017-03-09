@@ -16,7 +16,7 @@ public class FragmentChoreography extends FragmentManager.FragmentLifecycleCallb
         if (!isActor(f))
             return;
 
-        Director.getActorRegistry().enroll((Actor) f, savedInstanceState);
+        Director.actorRegistry().enroll((Actor) f, savedInstanceState);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class FragmentChoreography extends FragmentManager.FragmentLifecycleCallb
             return;
 
         if (Director.isInConfigurationChange()) {
-            Director.getActorRegistry().take5((Actor) f, outState);
+            Director.actorRegistry().take5((Actor) f, outState);
         }
     }
 

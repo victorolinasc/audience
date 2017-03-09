@@ -66,7 +66,7 @@ public final class ActorSystem {
     }
 
     public RuleRegistry toRuleRegistry() {
-        return Director.getRuleRegistry();
+        return Director.ruleRegistry();
     }
 
     <T> void send(MessageEvent<T> message) {

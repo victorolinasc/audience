@@ -57,36 +57,4 @@ public final class RetrofitActor implements SingletonActor {
         }
 
     }
-
-//    private <R> void handleCall(ApiCall<T, R> call, ActorRef sender, ActorRef self) {
-//
-//        final Call<R> result = call.call(apiProxy);
-//
-//        try {
-//            final Response<R> response = result.execute();
-//
-//            if (response.isSuccessful()) {
-//                self.tell(response.body()).onStage().to(sender);
-//                return;
-//            }
-//
-//            final int code = response.code();
-//            final String body = response.errorBody().string();
-//
-//            if (code >= 400 && code < 500)
-//                self.tell(new ClientException(code, body))
-//                        .onStage()
-//                        .to(sender);
-//
-//            else
-//                self.tell(new ServerException(code, body))
-//                        .onStage()
-//                        .to(sender);
-//
-//        } catch (IOException e) {
-//            self.tell(new NetworkException("IO exception on API call", e))
-//                    .onStage()
-//                    .to(sender);
-//        }
-//    }
 }

@@ -21,14 +21,16 @@ android {
     }
 }
 
-final okhttp = '3.6.0'
 final retrofit = '2.2.0'
+
+rootProject.includeTestDeps(dependencies)
 
 dependencies {
 
     compile project(':audience')
+
     compile "com.squareup.retrofit2:retrofit:$retrofit"
     compile "com.squareup.retrofit2:converter-moshi:$retrofit"
-    compile "com.squareup.okhttp3:okhttp:$okhttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okHttp"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okHttp"
 }

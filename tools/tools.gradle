@@ -4,6 +4,3 @@ apply from: "$rootDir/tools/test/jacoco.gradle"
 
 // Lint plugins
 apply from: "$rootDir/tools/linters/linters.gradle"
-
-// Publish plugins
-apply from: "$rootDir/tools/publish/publish.gradle"

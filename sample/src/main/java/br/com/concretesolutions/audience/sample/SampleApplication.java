@@ -15,6 +15,7 @@ public class SampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
+
         Director.beginShow(this)
                 .toRuleRegistry()
                 .addAssistantAndScriptRule(new LoggingShowRule());

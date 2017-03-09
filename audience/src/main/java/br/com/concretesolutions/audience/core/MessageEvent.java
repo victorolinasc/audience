@@ -33,7 +33,7 @@ public final class MessageEvent<T> {
     }
 
     public Class<?> messageClass() {
-        return ClassUtil.messageClass(message);
+        return Utils.messageClass(message);
     }
 
     @Override

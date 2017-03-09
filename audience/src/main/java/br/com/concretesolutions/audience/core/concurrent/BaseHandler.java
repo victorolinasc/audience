@@ -16,7 +16,7 @@ public abstract class BaseHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         final MessageEvent event = (MessageEvent) msg.obj;
-        Director.getActorRegistry()
+        Director.actorRegistry()
                 .storageForRef(event.receiver)
                 .executeEvent(event);
     }
