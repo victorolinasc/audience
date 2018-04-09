@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion versions.targetSdk
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -21,16 +20,14 @@ android {
     }
 }
 
-final retrofit = '2.2.0'
-
 rootProject.includeTestDeps(dependencies)
 
 dependencies {
 
-    compile project(':audience')
+    implementation project(':audience')
 
-    compile "com.squareup.retrofit2:retrofit:$retrofit"
-    compile "com.squareup.retrofit2:converter-moshi:$retrofit"
-    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.okHttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okHttp"
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
 }

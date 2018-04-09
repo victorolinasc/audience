@@ -2,12 +2,11 @@ apply plugin: 'com.android.library'
 apply from: "$rootDir/tools/tools.gradle"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion versions.targetSdk
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -26,11 +25,9 @@ android {
     }
 }
 
-final versions = rootProject.ext
-
 rootProject.includeTestDeps(dependencies)
 
 dependencies {
-    compile "com.android.support:support-annotations:$versions.support"
-    compile "com.android.support:support-fragment:$versions.support"
+    implementation "com.android.support:support-annotations:$versions.supportLibrary"
+    implementation "com.android.support:support-fragment:$versions.supportLibrary"
 }

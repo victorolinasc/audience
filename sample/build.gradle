@@ -1,21 +1,13 @@
-buildscript {
-    repositories { mavenCentral() }
-    dependencies { classpath 'me.tatarka:gradle-retrolambda:3.5.0' }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply from: "$rootDir/tools/tools.gradle"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion versions.targetSdk
 
     defaultConfig {
-        applicationId "br.com.concretesolutions.audience.sample"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion versions.targetSdk
+        applicationId "br.com.concretesolutions.audience.sample"
         versionCode 1
         versionName "1.0"
 
@@ -37,47 +29,45 @@ android {
     }
 }
 
-final support = '25.2.0'
-final butterknife = '8.5.1'
-final okhttp = '3.6.0'
-final retrofit = '2.2.0'
-final commonmark = '0.8.0'
-final stetho = '1.4.2'
+final butterknife = '8.8.1'
+final commonmark = '0.11.0'
+final stetho = '1.5.0'
 
 rootProject.includeTestDeps(dependencies)
 
 dependencies {
 
     // Async
-    compile project(':audience-retrofit')
+    implementation project(':audience')
+    implementation project(':audience-retrofit')
 
     // Support
-    compile "com.android.support:appcompat-v7:$support"
-    compile "com.android.support:cardview-v7:$support"
-    compile "com.android.support:recyclerview-v7:$support"
-    compile "com.android.support:design:$support"
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:cardview-v7:$versions.support"
+    implementation "com.android.support:recyclerview-v7:$versions.support"
+    implementation "com.android.support:design:$versions.support"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // Boilerplate
-    compile "com.jakewharton:butterknife:$butterknife"
+    implementation "com.jakewharton:butterknife:$butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife"
 
     // REST
-    compile "com.squareup.retrofit2:retrofit:$retrofit"
-    compile "com.squareup.retrofit2:converter-moshi:$retrofit"
-    compile "com.squareup.okhttp3:okhttp:$okhttp"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp"
-    compile 'com.squareup.moshi:moshi:1.3.1'
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
+    implementation 'com.squareup.moshi:moshi:1.5.0'
 
     // Markdown
-    compile "com.atlassian.commonmark:commonmark:$commonmark"
-    compile "com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:$commonmark"
-    compile "com.atlassian.commonmark:commonmark-ext-autolink:$commonmark"
-    compile "com.atlassian.commonmark:commonmark-ext-gfm-tables:$commonmark"
-    compile "com.atlassian.commonmark:commonmark-ext-heading-anchor:$commonmark"
+    implementation "com.atlassian.commonmark:commonmark:$commonmark"
+    implementation "com.atlassian.commonmark:commonmark-ext-gfm-strikethrough:$commonmark"
+    implementation "com.atlassian.commonmark:commonmark-ext-autolink:$commonmark"
+    implementation "com.atlassian.commonmark:commonmark-ext-gfm-tables:$commonmark"
+    implementation "com.atlassian.commonmark:commonmark-ext-heading-anchor:$commonmark"
 
     // Others
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile "com.facebook.stetho:stetho:$stetho"
-    compile "com.facebook.stetho:stetho-okhttp3:$stetho"
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation "com.facebook.stetho:stetho:$stetho"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho"
 }
