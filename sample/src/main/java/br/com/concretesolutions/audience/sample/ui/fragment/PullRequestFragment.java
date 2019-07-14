@@ -13,9 +13,9 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.concretesolutions.audience.core.Director;
-import br.com.concretesolutions.audience.core.actor.Actor;
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.Director;
+import io.github.victorolinasc.audience.core.actor.Actor;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.retrofit.exception.ClientException;
 import br.com.concretesolutions.audience.retrofit.exception.NetworkException;
 import br.com.concretesolutions.audience.sample.R;
@@ -58,7 +58,7 @@ public class PullRequestFragment extends BaseFragment implements Actor {
         final boolean open = getArguments().getBoolean("open");
         final RepositoryVO repo = getArguments().getParcelable("repo");
 
-        adapter = new PullRequestsAdapter(Director.actorRef(this), open, repo);
+        adapter = new PullRequestsAdapter(Director.INSTANCE.actorRef(this), open, repo);
         layoutManager = new LinearLayoutManager(getContext());
 
         pullRequestsList.setLayoutManager(layoutManager);

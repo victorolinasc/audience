@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.sample.R;
 import br.com.concretesolutions.audience.sample.data.api.Api;
 import br.com.concretesolutions.audience.sample.data.api.ApiProvider;

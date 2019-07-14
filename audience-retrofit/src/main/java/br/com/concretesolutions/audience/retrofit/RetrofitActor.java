@@ -3,10 +3,9 @@ package br.com.concretesolutions.audience.retrofit;
 
 import java.io.IOException;
 
-import br.com.concretesolutions.audience.core.Director;
-import br.com.concretesolutions.audience.core.actor.ActorRef;
-import br.com.concretesolutions.audience.core.actor.SingletonActor;
-import br.com.concretesolutions.audience.core.script.Script3;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.actor.SingletonActor;
+import io.github.victorolinasc.audience.core.script.Script3;
 import br.com.concretesolutions.audience.retrofit.calladapter.MessageCall;
 import br.com.concretesolutions.audience.retrofit.exception.ClientException;
 import br.com.concretesolutions.audience.retrofit.exception.NetworkException;

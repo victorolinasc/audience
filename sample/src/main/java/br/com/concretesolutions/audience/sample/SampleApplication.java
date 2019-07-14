@@ -5,8 +5,8 @@ import android.content.res.Configuration;
 
 import com.facebook.stetho.Stetho;
 
-import br.com.concretesolutions.audience.core.Director;
-import br.com.concretesolutions.audience.core.rule.LoggingShowRule;
+import io.github.victorolinasc.audience.core.Director;
+import io.github.victorolinasc.audience.core.rule.LoggingShowRule;
 import br.com.concretesolutions.audience.sample.data.api.ApiProvider;
 
 public class SampleApplication extends Application {
@@ -16,8 +16,8 @@ public class SampleApplication extends Application {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
 
-        Director.beginShow(this)
-                .toRuleRegistry()
+        Director.INSTANCE.beginShow(this)
+                .getRuleRegistry()
                 .addAssistantAndScriptRule(new LoggingShowRule());
 
         ApiProvider.init("https://api.github.com");
@@ -25,7 +25,7 @@ public class SampleApplication extends Application {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Director.onConfigurationChanged();
+        Director.INSTANCE.onConfigurationChanged();
         super.onConfigurationChanged(newConfig);
     }
 }

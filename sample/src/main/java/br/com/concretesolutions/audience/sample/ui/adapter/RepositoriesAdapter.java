@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.sample.R;
 import br.com.concretesolutions.audience.sample.data.api.Api;
 import br.com.concretesolutions.audience.sample.data.api.ApiProvider;

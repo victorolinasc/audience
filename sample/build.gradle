@@ -38,7 +38,7 @@ rootProject.includeTestDeps(dependencies)
 dependencies {
 
     // Async
-    implementation project(':audience')
+    implementation project(':audience-core')
     implementation project(':audience-retrofit')
 
     // Support

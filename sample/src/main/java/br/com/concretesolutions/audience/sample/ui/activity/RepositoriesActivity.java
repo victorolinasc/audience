@@ -13,9 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import br.com.concretesolutions.audience.core.Director;
-import br.com.concretesolutions.audience.core.actor.Actor;
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.Director;
+import io.github.victorolinasc.audience.core.actor.Actor;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.retrofit.exception.ClientException;
 import br.com.concretesolutions.audience.retrofit.exception.NetworkException;
 import br.com.concretesolutions.audience.retrofit.exception.ServerException;
@@ -57,7 +57,7 @@ public class RepositoriesActivity extends BaseActivity implements Actor {
         setContentView(R.layout.activity_repositories);
         setSupportActionBar(toolbar);
 
-        adapter = new RepositoriesAdapter(Director.actorRef(this));
+        adapter = new RepositoriesAdapter(Director.INSTANCE.actorRef(this));
         layoutManager = createLayoutManager();
 
         repositoriesList.setLayoutManager(layoutManager);

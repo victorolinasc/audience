@@ -1,7 +1,7 @@
 package br.com.concretesolutions.audience.retrofit.calladapter;
 
-import br.com.concretesolutions.audience.core.Director;
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.Director;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.retrofit.RetrofitActor;
 import retrofit2.Call;
 
@@ -28,7 +28,7 @@ public final class MessageCall<T> {
     }
 
     public void tell() {
-        replyTo.tell(this).to(Director.actorRef(RetrofitActor.class));
+        replyTo.tell(this).to(Director.INSTANCE.actorRef(RetrofitActor.class));
     }
 
     public Call<T> getCall() {

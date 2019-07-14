@@ -3,7 +3,7 @@ package br.com.concretesolutions.audience.sample.ui.activity;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 
-import br.com.concretesolutions.audience.core.actor.ActorRef;
+import io.github.victorolinasc.audience.core.actor.ActorRef;
 import br.com.concretesolutions.audience.retrofit.exception.ClientException;
 import br.com.concretesolutions.audience.retrofit.exception.NetworkException;
 import br.com.concretesolutions.audience.retrofit.exception.ServerException;
